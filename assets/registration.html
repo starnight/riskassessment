@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+<body>
+<h1>Asset Risk Management</h1>
+<h2>Registration</h2>
+<form id='login' method='POST' action='/api/register'>
+<label for="account">Account:</label><input type="text" name="account" required><br>
+<label for="passwd">Password:</label><input type="password" name="passwd" required><br>
+<input type="hidden" id="_csrf" name="_csrf" :value='token' />
+<input type="submit" value="Register">
+</form>
+
+<script>
+const vm = Vue.createApp({
+  data() {
+    return {
+      token: "",
+    }
+  },
+  beforeMount() {
+    this.get_token();
+  },
+  methods: {
+    get_token: function () {
+      let ref = this;
+      fetch('/api/login', {
+        method: 'get',
+      }).then((response) => {
+        if (!response.ok) throw new Error(response.statusText)
+        ref.token = response.headers.get('X-Csrf-Token');
+      }).catch(function(err) {
+        console.log(err);
+      });
+    },
+  }
+}).mount('#login');
+</script>
+</body>
+</html>

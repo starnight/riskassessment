@@ -1,0 +1,83 @@
+{
+  "BigCategory": [
+    {
+      "value": "Information (or data)",
+      "SmallCategory": [
+        {"value": "Information System"},
+        {"value": "Database"}
+      ]
+    },
+    {
+      "value": "Intangibles",
+      "SmallCategory": [
+        {"value": "Trademarks"},
+        {"value": "Patents"}
+      ]
+    },
+    {
+      "value": "People",
+      "SmallCategory": [
+        {"value": "System Administrator"},
+        {"value": "Database Manager"}
+      ]
+    },
+    {
+      "value": "Hardware",
+      "SmallCategory": [
+        {"value": "Server"},
+        {"value": "Laptop"}
+      ]
+    },
+    {
+      "value": "Software",
+      "SmallCategory": [
+        {"value": "Toolchain"},
+        {"value": "Operating System"}
+      ]
+    },
+    {
+      "value": "Services",
+      "SmallCategory": [
+        {"value": "Cloud Service"},
+        {"value": "Internet"}
+      ]
+    },
+    {
+      "value": "Locations & Buildings",
+      "SmallCategory": [
+        {"value": "Office Area"},
+        {"value": "Electromechanics"}
+      ]
+    }
+  ],
+  "Confidentiality": [
+    {"value": 1, "text": "level 1"},
+    {"value": 2, "text": "level 2"},
+    {"value": 3, "text": "level 3"},
+    {"value": 4, "text": "level 4"}
+  ],
+  "Integrity": [
+    {"value": 1, "text": "level 1"},
+    {"value": 2, "text": "level 2"},
+    {"value": 3, "text": "level 3"},
+    {"value": 4, "text": "level 4"}
+  ],
+  "Availability": [
+    {"value": 1, "text": "level 1"},
+    {"value": 2, "text": "level 2"},
+    {"value": 3, "text": "level 3"},
+    {"value": 4, "text": "level 4"}
+  ],
+  "Possibility": [
+    {"value": 1, "text": "level 1"},
+    {"value": 2, "text": "level 2"},
+    {"value": 3, "text": "level 3"},
+    {"value": 4, "text": "level 4"}
+  ],
+  "Impact": [
+    {"value": 1, "text": "level 1"},
+    {"value": 2, "text": "level 2"},
+    {"value": 3, "text": "level 3"},
+    {"value": 4, "text": "level 4"}
+  ]
+}
