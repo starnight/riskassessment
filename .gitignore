@@ -8,6 +8,7 @@
 *.so
 *.dylib
 *webserver
+build/
 
 # Test binary, built with `go test -c`
 *.test

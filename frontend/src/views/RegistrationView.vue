@@ -1,20 +1,17 @@
-<!DOCTYPE html>
-<html>
-<head>
-<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-</head>
-<body>
-<h1>Asset Risk Management</h1>
+<template>
 <h2>Registration</h2>
 <form id='login' method='POST' action='/api/register'>
-<label for="account">Account:</label><input type="text" name="account" required><br>
-<label for="passwd">Password:</label><input type="password" name="passwd" required><br>
+<table class="center">
+  <tr><td class="right">Account:</td><td><input type="text" name="account" required></td></tr>
+  <tr><td class="right">Password:</td><td><input type="password" name="passwd" required></td></tr>
+</table>
 <input type="hidden" id="_csrf" name="_csrf" :value='token' />
 <input type="submit" value="Register">
 </form>
+</template>
 
 <script>
-const vm = Vue.createApp({
+export default {
   data() {
     return {
       token: "",
@@ -36,7 +33,16 @@ const vm = Vue.createApp({
       });
     },
   }
-}).mount('#login');
+};
 </script>
-</body>
-</html>
+
+<style>
+table.center {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+td.right {
+  text-align: right;
+}
+</style>

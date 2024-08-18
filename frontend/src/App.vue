@@ -1,33 +1,15 @@
-.menu  {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-  background-color: #333;
-}
+<template>
+  <h1>Asset Risk Management</h1>
+  <router-view/>
+</template>
 
-.menu li {
-   float: left;
-}
-
-.menu li a {
-  display: block;
-  color: white;
+<style>
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  padding: 14px 16px;
-  text-decoration: none;
-}
-
-.menu li a:hover:not(.active) {
-  background-color: #111;
-}
-
-.menu li a.active {
-  float: right;
-}
-
-.active {
-  background-color: #4CAF50;
+  color: #2c3e50;
 }
 
 #datatable {
@@ -54,3 +36,4 @@
   background-color: #04AA6D;
   color: white;
 }
+</style>

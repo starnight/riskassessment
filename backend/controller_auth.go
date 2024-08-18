@@ -56,7 +56,7 @@ func (ap *AuthApp) DoLogin(c *gin.Context) {
   session.Set("role", user.Role)
   session.Save()
 
-  c.Redirect(http.StatusFound, "/assets/assets.html")
+  c.Status(http.StatusOK)
 }
 
 func (ap *AuthApp) Logout(c *gin.Context) {

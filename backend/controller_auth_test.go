@@ -131,7 +131,6 @@ func TestDoLogin(t *testing.T) {
   ap.DoLogin(c)
 
   assert.Equal(t, http.StatusOK, w.Code)
-  assert.Equal(t, "/assets/assets.html", w.Header().Get("Location"))
 }
 
 func TestLogout(t *testing.T) {

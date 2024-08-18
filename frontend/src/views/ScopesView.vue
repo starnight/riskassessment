@@ -1,19 +1,5 @@
-<!DOCTYPE html>
-<html>
-<head>
-<link rel="stylesheet" href="/assets/table.css">
-<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-</head>
-<body>
-<h1>Asset Risk Management</h1>
-<div id="app">
-<ul class="menu">
-  <li><a href="/assets/assets.html">Assets</a></li>
-  <li><a href="/assets/riskassessment.html">Risk Assessment</a></li>
-  <li><a class="active" href="/assets/scopes.html" v-if='userinfo.Role == 1'>Manage Scopes</a></li>
-  <li><a href="/assets/users.html" v-if='userinfo.Role == 1'>Manage Users</a></li>
-  <li><a href="/api/logout">Logout</a></li>
-</ul>
+<template>
+<MenuComponent :userinfo=userinfo :viewname=viewname :token=token />
 <table id="datatable">
 <thead>
   <tr>
@@ -22,7 +8,7 @@
   </tr>
 </thead>
 <tbody>
-  <tr v-for='scope in scopes'>
+  <tr v-for='(scope, id) in scopes' :key=id>
   <template v-if='scope.mode == "read"'>
     <td>{{ scope.Name }}</td>
     <td>
@@ -39,12 +25,18 @@
   </tr>
 </tbody>
 </table>
-</div>
+</template>
 
 <script>
-const vm = Vue.createApp({
+import MenuComponent from '@/components/Menu.vue'
+
+export default {
+  components: {
+    MenuComponent
+  },
   data() {
     return {
+      viewname: 'ScopesView',
       userinfo: {},
       scopes: [],
       token: '',
@@ -71,9 +63,9 @@ const vm = Vue.createApp({
         }
         else {
           ref.scopes = res.Scopes;
-	  ref.scopes.forEach((ast) => {
+          ref.scopes.forEach((ast) => {
             ast.mode = 'read';
-	  });
+          });
         }
         ref.scopes.push({
           Name: '',
@@ -120,7 +112,5 @@ const vm = Vue.createApp({
       });
     },
   }
-}).mount('#app');
+};
 </script>
-</body>
-</html>

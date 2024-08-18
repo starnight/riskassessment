@@ -1,23 +1,9 @@
-<!DOCTYPE html>
-<html>
-<head>
-<link rel="stylesheet" href="/assets/table.css">
-<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-</head>
-<body>
-<h1>Asset Risk Management</h1>
-<div id="app">
-<ul class="menu">
-  <li><a href="/assets/assets.html">Assets</a></li>
-  <li><a href="/assets/riskassessment.html">Risk Assessment</a></li>
-  <li><a href="/assets/scopes.html" v-if='userinfo.Role == 1'>Manage Scopes</a></li>
-  <li><a class="active" href="/assets/users.html" v-if='userinfo.Role == 1'>Manage Users</a></li>
-  <li><a href="/api/logout">Logout</a></li>
-</ul>
+<template>
+<MenuComponent :userinfo=userinfo :viewname=viewname :token=token />
 Search user: <input v-on:keyup.enter="get_target_user()" v-model.lazy='account' /><button @click='get_target_user()'>Search</button>
 <div v-if='target_account'>Updating user: {{ target_account }}</div>
 <h2>Role</h2><hr>
-Administrator <input type='checkbox' @change='modify_scopes()' v-model.lazy='target_userrole'></button>
+Administrator <input type='checkbox' @change='modify_scopes()' v-model.lazy='target_userrole'>
 <h2>Scopes</h2><hr>
 <table id="datatable">
 <thead>
@@ -27,26 +13,31 @@ Administrator <input type='checkbox' @change='modify_scopes()' v-model.lazy='tar
   </tr>
 </thead>
 <tbody>
-  <tr v-for='scope in scopes'>
+  <tr v-for='(scope, id) in scopes' :key=id>
     <td>{{ scope.Name }}</td>
     <td>
-      <input type='checkbox' @change='modify_scopes()' v-model.lazy='scope.checked'></button>
+      <input type='checkbox' @change='modify_scopes()' v-model.lazy='scope.checked'>
     </td>
-  </template>
   </tr>
 </tbody>
 </table>
-</div>
+</template>
 
 <script>
+import MenuComponent from '@/components/Menu.vue'
+
 const Role = {
   NormalUser: 0,
   Administrator: 1
 };
 
-const vm = Vue.createApp({
+export default {
+  components: {
+    MenuComponent
+  },
   data() {
     return {
+      viewname: 'UsersView',
       account: '',
       target_account: '',
       target_userinfo: {},
@@ -132,7 +123,7 @@ const vm = Vue.createApp({
       }
     },
     update_user_scopes: function () {
-      ref = this;
+      let ref = this;
       fetch('/api/updateuser_scopes', {
         method: 'post',
         headers: new Headers({
@@ -147,7 +138,5 @@ const vm = Vue.createApp({
       });
     },
   }
-}).mount('#app');
+};
 </script>
-</body>
-</html>

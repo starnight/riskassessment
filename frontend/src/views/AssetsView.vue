@@ -1,23 +1,9 @@
-<!DOCTYPE html>
-<html>
-<head>
-<link rel="stylesheet" href="/assets/table.css">
-<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-</head>
-<body>
-<h1>Asset Risk Management</h1>
-<div id="app">
-<ul class="menu">
-  <li><a class="active" href="/assets/assets.html">Assets</a></li>
-  <li><a href="/assets/riskassessment.html">Risk Assessment</a></li>
-  <li><a href="/assets/scopes.html" v-if='userinfo.Role == 1'>Manage Scopes</a></li>
-  <li><a href="/assets/users.html" v-if='userinfo.Role == 1'>Manage Users</a></li>
-  <li><a href="/api/logout">Logout</a></li>
-</ul>
+<template>
+<MenuComponent :userinfo=userinfo :viewname=viewname :token=token />
 Scope:
 <select @change='get_assets()' v-model='chosen_scope'>
-  <option v-for='scope in scopes' :value='scope.ID'>{{ scope.Name }}</option>
-<select/>
+  <option v-for='(scope, id) in scopes' :value='scope.ID' :key=id>{{ scope.Name }}</option>
+</select>
 <table id='datatable'>
 <thead>
   <tr>
@@ -32,7 +18,7 @@ Scope:
   </tr>
 </thead>
 <tbody>
-  <tr v-for='asset in assets'>
+  <tr v-for='(asset, id) in assets' :key=id>
   <template v-if='asset.mode == "read"'>
     <td>{{ asset.BigCategory }}</td>
     <td>{{ asset.SmallCategory }}</td>
@@ -50,33 +36,33 @@ Scope:
     <td>
       <select v-model.lazy='asset.BigCategory'>
         <option value='' selected disabled>Choose</option>
-        <option v-for='option in config.BigCategory' :value='option.value'>{{ option.value }}</option>
-      <select/>
+        <option v-for='(option, id) in config.BigCategory' :value='option.value' :key=id>{{ option.value }}</option>
+      </select>
     </td>
     <td>
       <select v-model.lazy='asset.SmallCategory' v-if='asset.BigCategory'>
         <option value='' selected disabled>Choose</option>
-        <option v-for='option in pick_bigcategory(asset.BigCategory).SmallCategory' :value='option.value'>{{ option.value }}</option>
-      <select/>
+        <option v-for='(option, id) in pick_bigcategory(asset.BigCategory).SmallCategory' :value='option.value' :key=id>{{ option.value }}</option>
+      </select>
     </td>
     <td><input v-model.lazy='asset.Name' /></td>
     <td><input v-model.lazy='asset.Owner' /></td>
     <td>
       <select v-model.number='asset.Value.Confidentiality'>
         <option value='' selected disabled>Choose</option>
-        <option v-for='option in config.Confidentiality' :value='option.value'>{{ option.text }}</option>
+        <option v-for='(option, id) in config.Confidentiality' :value='option.value' :key=id>{{ option.text }}</option>
       </select>
     </td>
     <td>
       <select v-model.number='asset.Value.Integrity'>
         <option value='' selected disabled>Choose</option>
-        <option v-for='option in config.Integrity' :value='option.value'>{{ option.text }}</option>
+        <option v-for='(option, id) in config.Integrity' :value='option.value' :key=id>{{ option.text }}</option>
       </select>
     </td>
     <td>
       <select v-model.number='asset.Value.Availability'>
         <option value='' selected disabled>Choose</option>
-        <option v-for='option in config.Availability' :value='option.value'>{{ option.text }}</option>
+        <option v-for='(option, id) in config.Availability' :value='option.value' :key=id>{{ option.text }}</option>
       </select>
     </td>
     <td>
@@ -87,45 +73,33 @@ Scope:
   </tr>
 </tbody>
 </table>
-</div>
+</template>
 
 <script>
-const vm = Vue.createApp({
+import json from '@/assets/config.json'
+import MenuComponent from '@/components/Menu.vue'
+
+export default {
+  components: {
+    MenuComponent
+  },
   data() {
     return {
+      viewname: 'AssetsView',
       userinfo: {},
       scopes: [],
       chosen_scope: '',
       assets: [],
-      config: {},
+      config: json,
       token: '',
     }
   },
   beforeMount() {
-    this.get_config();
+    this.get_scopes();
   },
   methods: {
     pick_bigcategory: function (category) {
       return this.config.BigCategory.find((ctg) => ctg.value == category);
-    },
-    get_config: function () {
-      let ref = this;
-      fetch('/assets/config.json', {
-        method: 'get',
-      }).then((response) => {
-        if (!response.ok) throw new Error(response.statusText)
-        return response.json();
-      }).then((res) => {
-        if (res == null) {
-          ref.config = {};
-        }
-        else {
-          ref.config = res;
-          ref.get_scopes();
-        }
-      }).catch(function(err) {
-        console.log(err);
-      });
     },
     get_scopes: function () {
       let ref = this;
@@ -237,7 +211,5 @@ const vm = Vue.createApp({
       });
     }
   }
-}).mount('#app');
+};
 </script>
-</body>
-</html>

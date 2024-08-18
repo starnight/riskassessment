@@ -1,23 +1,9 @@
-<!DOCTYPE html>
-<html>
-<head>
-<link rel="stylesheet" href="/assets/table.css">
-<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-</head>
-<body>
-<h1>Asset Risk Management</h1>
-<div id="app">
-<ul class="menu">
-  <li><a href="/assets/assets.html">Assets</a></li>
-  <li><a class="active" href="/assets/riskassessment.html">Risk Assessment</a></li>
-  <li><a href="/assets/scopes.html" v-if='userinfo.Role == 1'>Manage Scopes</a></li>
-  <li><a href="/assets/users.html" v-if='userinfo.Role == 1'>Manage Users</a></li>
-  <li><a href="/api/logout">Logout</a></li>
-</ul>
+<template>
+<MenuComponent :userinfo=userinfo :viewname=viewname :token=token />
 Scope:
 <select @change='get_assets()' v-model='chosen_scope'>
-  <option v-for='scope in scopes' :value='scope.ID'>{{ scope.Name }}</option>
-<select/>
+  <option v-for='(scope, id) in scopes' :value='scope.ID' :key=id>{{ scope.Name }}</option>
+</select>
 <table id='datatable'>
 <thead>
   <tr>
@@ -39,7 +25,7 @@ Scope:
 </thead>
 <tbody>
   <template v-for='asset in assets'>
-    <tr v-for='(risk, risk_i) in asset.Risks'>
+    <tr v-for='(risk, risk_i) in asset.Risks' :key=risk_i>
       <td class="asset" v-if='!risk_i' :rowspan='asset.Risks.length'>{{ asset.BigCategory }}</td>
       <td class="asset" v-if='!risk_i' :rowspan='asset.Risks.length'>{{ asset.SmallCategory }}</td>
       <td class="asset" v-if='!risk_i' :rowspan='asset.Risks.length'>{{ asset.Name }}</td>
@@ -73,13 +59,13 @@ Scope:
       <td>
         <select v-model.number='risk.Possibility'>
           <option value='' selected disabled>Choose</option>
-          <option v-for='option in config.Possibility' :value='option.value'>{{ option.text }}</option>
+          <option v-for='(option, id) in config.Possibility' :value='option.value' :key=id>{{ option.text }}</option>
         </select>
       </td>
       <td>
         <select v-model.number='risk.Impact'>
           <option value='' selected disabled>Choose</option>
-          <option v-for='option in config.Impact' :value='option.value'>{{ option.text }}</option>
+          <option v-for='(option, id) in config.Impact' :value='option.value' :key=id>{{ option.text }}</option>
         </select>
       </td>
       <td>{{ calculate_risk(
@@ -97,42 +83,30 @@ Scope:
   </template>
 </tbody>
 </table>
-</div>
+</template>
 
 <script>
-const vm = Vue.createApp({
+import json from '@/assets/config.json'
+import MenuComponent from '@/components/Menu.vue'
+
+export default {
+  components: {
+    MenuComponent
+  },
   data() {
     return {
+      viewname: 'RiskAssessmentView',
       userinfo: {},
       scopes: [],
       chosen_scope: '',
       assets: [],
-      config: {},
+      config: json,
     }
   },
   beforeMount() {
-    this.get_config();
+    this.get_scopes();
   },
   methods: {
-    get_config: function () {
-      let ref = this;
-      fetch('/assets/config.json', {
-        method: 'get',
-      }).then((response) => {
-        if (!response.ok) throw new Error(response.statusText)
-        return response.json();
-      }).then((res) => {
-        if (res == null) {
-          ref.config = {};
-        }
-        else {
-          ref.config = res;
-          ref.get_scopes();
-        }
-      }).catch(function(err) {
-        console.log(err);
-      });
-    },
     get_scopes: function () {
       let ref = this;
       fetch('/api/getscopesbyuser', {
@@ -184,7 +158,7 @@ const vm = Vue.createApp({
         }
         else {
           ref.assets = res.Assets;
-	  ref.assets.forEach((ast) => {
+          ref.assets.forEach((ast) => {
             if (ast.Risks.length == 0) {
               ast.Risks.push({
                 Threat: "",
@@ -193,11 +167,11 @@ const vm = Vue.createApp({
                 Possibility: "",
                 Integrity: "",
                 mode: "add",
-	      });
-	    } else {
+              });
+            } else {
               ast.Risks.forEach((risk) => risk.mode = "read");
-	    }
-	  });
+            }
+          });
         }
       }).catch(function(err) {
         console.log(err);
@@ -237,7 +211,5 @@ const vm = Vue.createApp({
       this.update_asset(asset);
     }
   }
-}).mount('#app');
+};
 </script>
-</body>
-</html>
