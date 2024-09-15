@@ -14,7 +14,7 @@ import (
   "github.com/stretchr/testify/mock"
   "go.mongodb.org/mongo-driver/bson/primitive"
 
-  "github.com/starnight/risk_assessment/auth"
+  "github.com/starnight/riskassessment/backend/auth"
 )
 
 type mockUserUtils struct {

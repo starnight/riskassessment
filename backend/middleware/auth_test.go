@@ -11,7 +11,7 @@ import (
   "net/http/httptest"
   "github.com/stretchr/testify/assert"
 
-  "github.com/starnight/risk_assessment/auth"
+  "github.com/starnight/riskassessment/backend/auth"
 )
 
 func PublicRoutes (g *gin.RouterGroup) {

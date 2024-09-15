@@ -5,7 +5,7 @@ import (
   "github.com/gin-gonic/gin"
   "github.com/gin-contrib/sessions"
 
-  "github.com/starnight/risk_assessment/auth"
+  "github.com/starnight/riskassessment/backend/auth"
 )
 
 func AuthenticationRequired(c *gin.Context) {

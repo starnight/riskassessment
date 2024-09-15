@@ -15,7 +15,7 @@ import (
   "github.com/gin-gonic/gin/binding"
   "go.mongodb.org/mongo-driver/bson/primitive"
 
-  "github.com/starnight/risk_assessment/risk_assessment"
+  "github.com/starnight/riskassessment/backend/risk_assessment"
 )
 
 type mockCsrtUtils struct {}

@@ -8,7 +8,7 @@ import (
   "go.mongodb.org/mongo-driver/bson/primitive"
   "go.mongodb.org/mongo-driver/mongo"
 
-  "github.com/starnight/risk_assessment/config"
+  "github.com/starnight/riskassessment/backend/config"
 )
 
 type Scope struct {

@@ -1,4 +1,4 @@
-module github.com/starnight/risk_assessment
+module github.com/starnight/riskassessment/backend
 
 go 1.22.4
 

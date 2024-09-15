@@ -11,11 +11,11 @@ import (
   "github.com/utrack/gin-csrf"
   "go.mongodb.org/mongo-driver/mongo"
 
-  "github.com/starnight/risk_assessment/auth"
-  "github.com/starnight/risk_assessment/config"
-  "github.com/starnight/risk_assessment/middleware"
-  "github.com/starnight/risk_assessment/risk_assessment"
-  "github.com/starnight/risk_assessment/database"
+  "github.com/starnight/riskassessment/backend/auth"
+  "github.com/starnight/riskassessment/backend/config"
+  "github.com/starnight/riskassessment/backend/middleware"
+  "github.com/starnight/riskassessment/backend/risk_assessment"
+  "github.com/starnight/riskassessment/backend/database"
 )
 
 type Apps struct {

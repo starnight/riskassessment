@@ -13,7 +13,7 @@ import (
   "go.mongodb.org/mongo-driver/mongo"
   "go.mongodb.org/mongo-driver/mongo/options"
 
-  "github.com/starnight/risk_assessment/config"
+  "github.com/starnight/riskassessment/backend/config"
 )
 
 type Asset struct {

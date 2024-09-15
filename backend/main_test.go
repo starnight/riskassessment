@@ -14,9 +14,9 @@ import (
 
   "github.com/utrack/gin-csrf"
 
-  "github.com/starnight/risk_assessment/auth"
-  "github.com/starnight/risk_assessment/middleware"
-  "github.com/starnight/risk_assessment/risk_assessment"
+  "github.com/starnight/riskassessment/backend/auth"
+  "github.com/starnight/riskassessment/backend/middleware"
+  "github.com/starnight/riskassessment/backend/risk_assessment"
 )
 
 type mockAuthApp struct {}

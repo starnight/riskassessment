@@ -3,7 +3,7 @@ package risk_assessment
 import (
   "testing"
   "github.com/stretchr/testify/assert"
-  "github.com/starnight/risk_assessment/database"
+  "github.com/starnight/riskassessment/backend/database"
 
   "go.mongodb.org/mongo-driver/mongo"
   "go.mongodb.org/mongo-driver/bson/primitive"

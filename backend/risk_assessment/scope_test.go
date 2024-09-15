@@ -5,7 +5,7 @@ import (
   "github.com/stretchr/testify/assert"
   "go.mongodb.org/mongo-driver/bson/primitive"
 
-  "github.com/starnight/risk_assessment/database"
+  "github.com/starnight/riskassessment/backend/database"
 )
 
 var scope_utils = ScopeUtils{
